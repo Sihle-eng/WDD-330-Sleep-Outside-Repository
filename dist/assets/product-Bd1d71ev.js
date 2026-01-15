@@ -1,0 +1,1 @@
+import{g as o,s as d}from"./utils-DeOcxcF7.js";import{P as r}from"./ProductData-Dx0C3TkS.js";const c=new r("tents");function e(a){let t=o("so-cart")||[];t.push(a),d("so-cart",t),alert("Product added to cart!")}async function n(a){const t=await c.findProductById(a.target.dataset.id);e(t)}document.getElementById("addToCart").addEventListener("click",n);
