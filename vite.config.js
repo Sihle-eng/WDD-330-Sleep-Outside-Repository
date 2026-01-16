@@ -2,15 +2,15 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "src/",
+  // root: "src/",
 
   build: {
     outDir: "../dist",
     rollupOptions: {
       input: {
-        main: "src/index.html",
-        cart: "src/cart/index.html",
-        checkout: "src/checkout/index.html",
+        main: "index.html",
+        cart: "cart/index.html",
+        checkout: "checkout/index.html",
       },
     },
   },
