@@ -1,16 +1,17 @@
 import ProductData from "./ProductData.mjs";
-import ProductList from "./ProductList.mjs";
+import ProductDetails from "./ProductDetails.mjs";
 
-const dataSource = new ProductData("tents");
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("product"); // e.g. "880RR"
 
-const element = document.querySelector(".product-list");
+const dataSource = new ProductData("tents.json");
+const productDetails = new ProductDetails(productId, dataSource);
+productDetails.init();
 
-const productList = new ProductList("Tents", dataSource, element);
 
-productList.init();
+function updateCartBadge() {
+    const cartItems = JSON.parse(localStorage.getItem("so-cart")) || []; const count = cartItems.length; const badge = document.querySelector(".cart_count"); if (badge) { badge.textContent = count; }
+}
+// run once when the DOM is ready document.addEventListener("DOMContentLoaded", updateCartBadge);
 
-// function updateCartCount(count) {
-//     document.querySelector('.cart_count').textContent = count;
-// }
-
-// updateCartCount(5);
+updateCartBadge();

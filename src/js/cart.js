@@ -10,6 +10,20 @@ function renderCartContents() {
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
 
+// function addToCart(product) {
+//   let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
+//   const existing = cart.find(item => item.Id === product.Id);
+//   if (existing) {
+//     existing.quantity = (existing.quantity || 1) + 1;
+//   } else {
+//     product.quantity = 1;
+//     cart.push(product);
+//   }
+//   localStorage.setItem("so-cart", JSON.stringify(cart));
+//   updateCartBadge();
+// }
+// addToCart();
+
 function cartItemTemplate(item) {
   if (!item || !item.Image) {
     return ""; // Skip items that don't have required properties

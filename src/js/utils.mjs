@@ -55,3 +55,4 @@ export function renderListWithTemplate(
   // Insert into the DOM at the specified position
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
