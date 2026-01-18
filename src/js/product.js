@@ -3,8 +3,8 @@ import { getParam } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-// Create a data source for tents
-const dataSource = new ProductData("tents");
+// Create a data source for tents.json
+const dataSource = new ProductData("tents.json");
 
 // Get the product ID from the query string (?product=...)
 const productID = getParam("product");
@@ -14,9 +14,30 @@ const product = new ProductDetails(productID, dataSource);
 product.init();
 
 // -------------------- CART FUNCTIONS --------------------
-
 function updateCartBadge() {
   const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
-  document.querySelector(".cart_count").textContent = cartItems.length;
+  const badge = document.querySelector(".cart_count");
+  if (badge) {
+    badge.textContent = cartItems.length;
+  }
 }
+
+// Add a product to the cart and refresh the badge
+async function addProductToCart(productId) {
+  const product = await dataSource.findProductById(productId);
+  let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
+  cart.push(product);
+  localStorage.setItem("so-cart", JSON.stringify(cart));
+  updateCartBadge(); // update immediately
+}
+
+// -------------------- EVENT LISTENER --------------------
+const button = document.getElementById("addToCart");
+if (button) {
+  button.addEventListener("click", (e) => {
+    addProductToCart(e.target.dataset.id);
+  });
+}
+
+// Show current cart count when the page loads
 updateCartBadge();
