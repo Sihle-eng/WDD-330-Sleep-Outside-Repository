@@ -32,17 +32,18 @@ function productDetailsTemplate(product) {
         document.querySelector("main").innerHTML = "<p>Product not found.</p>";
         return;
     }
-    document.querySelector("h2").textContent = product.Brand?.Name || "Unknown Brand";
-    document.querySelector("h3").textContent = product.NameWithoutBrand;
+
+    // Correct heading assignment
+    document.querySelector("h3").textContent = product.Brand?.Name || "Unknown Brand";
+    document.querySelector("h2").textContent = product.NameWithoutBrand;
 
     const productImage = document.getElementById("productImage");
     productImage.src = product.Image;
     productImage.alt = product.NameWithoutBrand;
 
-    document.getElementById("productPrice").textContent = product.FinalPrice;
+    document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
     document.getElementById("productColor").textContent = product.Colors?.[0]?.ColorName || "";
     document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
+
     document.getElementById("addToCart").dataset.id = product.Id;
 }
-
-
