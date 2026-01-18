@@ -19,7 +19,6 @@ function updateCartBadge() {
     }
 }
 
-// Add a product to the cart and refresh the badge
 async function addProductToCart(productId) {
     const product = await dataSource.findProductById(productId);
     let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
