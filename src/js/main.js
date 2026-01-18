@@ -1,5 +1,5 @@
-import ProductData from "./ProductData.mjs";
-import ProductDetails from "./ProductDetails.mjs";
+import ProductData from "../ProductData.mjs";
+import ProductDetails from "../ProductDetails.mjs";
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("product"); // e.g. "880RR"
