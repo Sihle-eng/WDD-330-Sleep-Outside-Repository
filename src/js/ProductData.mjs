@@ -1,7 +1,8 @@
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `../public/json/${this.category}.json`;
+    // Explicit path for GitHub Pages
+    this.path = `/WDD-330-Sleep-Outside-Repository/src/public/json/${this.category}.json`;
     console.log(`[ProductData] Constructor: category=${category}, path=${this.path}`);
   }
 
