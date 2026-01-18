@@ -33,12 +33,13 @@ function productDetailsTemplate(product) {
         return;
     }
 
-    // Correct heading assignment
+    console.log("Product object:", product); // Debugging
+
     document.querySelector("h3").textContent = product.Brand?.Name || "Unknown Brand";
     document.querySelector("h2").textContent = product.NameWithoutBrand;
 
     const productImage = document.getElementById("productImage");
-    productImage.src = product.Image;
+    productImage.src = product.ImageUrl || product.Image || "";
     productImage.alt = product.NameWithoutBrand;
 
     document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
