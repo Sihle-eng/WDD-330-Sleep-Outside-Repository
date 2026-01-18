@@ -15,15 +15,8 @@ product.init();
 
 // -------------------- CART FUNCTIONS --------------------
 
-document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("addToCart");
-  if (button) {
-    button.addEventListener("click", async (e) => {
-      // Get the product ID from the button's data-id attribute
-      const product = await dataSource.findProductById(e.target.dataset.id);
-      addProductToCart(product);
-    });
-  }
-  // Show current cart count when the page loads
-  updateCartBadge();
-});
+function updateCartBadge() {
+  const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
+  document.querySelector(".cart_count").textContent = cartItems.length;
+}
+updateCartBadge();
