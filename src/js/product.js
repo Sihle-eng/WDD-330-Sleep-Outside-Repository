@@ -22,7 +22,6 @@ function updateCartBadge() {
   }
 }
 
-// Add a product to the cart and refresh the badge
 async function addProductToCart(productId) {
   const product = await dataSource.findProductById(productId);
   let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
@@ -32,12 +31,13 @@ async function addProductToCart(productId) {
 }
 
 // -------------------- EVENT LISTENER --------------------
-const button = document.getElementById("addToCart");
-if (button) {
-  button.addEventListener("click", (e) => {
-    addProductToCart(e.target.dataset.id);
-  });
-}
-
-// Show current cart count when the page loads
-updateCartBadge();
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("addToCart");
+  if (button) {
+    button.addEventListener("click", (e) => {
+      addProductToCart(e.target.dataset.id);
+    });
+  }
+  // Show current cart count when the page loads
+  updateCartBadge();
+});
