@@ -11,7 +11,10 @@ productDetails.init();
 // Update the cart badge (the little number in the header)
 function updateCartBadge() {
     const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
-    document.querySelector(".cart_count").textContent = cartItems.length;
+    const cartCountElement = document.querySelector(".cart_count");
+    if (cartCountElement) {
+        cartCountElement.textContent = cartItems.length;
+    }
 }
 
 // Add a product to the cart and refresh the badge
@@ -32,6 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Get the product ID from the button's data-id attribute
             const product = await dataSource.findProductById(e.target.dataset.id);
             addProductToCart(product);
+
+            // Optional: Show confirmation message
+            alert("Product added to cart!");
         });
     }
     // Show current cart count when the page loads

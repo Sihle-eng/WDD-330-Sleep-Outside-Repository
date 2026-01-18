@@ -17,6 +17,30 @@ product.init();
 
 function updateCartBadge() {
   const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
-  document.querySelector(".cart_count").textContent = cartItems.length;
+  const cartCountElement = document.querySelector(".cart_count");
+  if (cartCountElement) {
+    cartCountElement.textContent = cartItems.length;
+  }
 }
-updateCartBadge();
+
+// Add a product to the cart and refresh the badge
+function addProductToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
+  cart.push(product);
+  localStorage.setItem("so-cart", JSON.stringify(cart));
+  updateCartBadge();
+}
+
+// Add event listener for Add to Cart button
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("addToCart");
+  if (button) {
+    button.addEventListener("click", async (e) => {
+      const product = await dataSource.findProductById(productID);
+      addProductToCart(product);
+      alert("Product added to cart!");
+    });
+  }
+
+  updateCartBadge();
+});
