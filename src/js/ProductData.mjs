@@ -1,7 +1,7 @@
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `/src/public/json/${this.category}.json`;
+    this.path = `../public/json/${this.category}.json`;
     console.log(`[ProductData] Constructor: category=${category}, path=${this.path}`);
   }
 
