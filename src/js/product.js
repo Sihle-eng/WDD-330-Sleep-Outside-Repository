@@ -14,4 +14,8 @@ const product = new ProductDetails(productID, dataSource);
 product.init();
 
 // -------------------- CART FUNCTIONS --------------------
-
+function updateCartBadge() {
+  const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
+  document.querySelector(".cart_count").textContent = cartItems.length;
+}
+updateCartBadge();
