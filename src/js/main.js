@@ -1,14 +1,22 @@
 import ProductData from "./ProductData.mjs";
-import ProductDetails from "../ProductDetails.mjs";
+import ProductDetails from "./ProductDetails.mjs";  // fixed path
+import { loadHeaderFooter } from "./utils.mjs";
 
 const params = new URLSearchParams(window.location.search);
 const productId = params.get("product"); // e.g. "880RR"
 
-const dataSource = new ProductData("tents.json");
-const productDetails = new ProductDetails(productId, dataSource);
-productDetails.init();
+// Create one dataSource for use everywhere
+const dataSource = new ProductData("tents");
 
-// Update the cart badge (the little number in the header)
+// Only initialize product details if we have a valid productId
+if (productId) {
+    const productDetails = new ProductDetails(productId, dataSource);
+    productDetails.init();
+} else {
+    console.info("No product ID in URL — skipping product details init.");
+}
+
+// -------------------- CART FUNCTIONS --------------------
 function updateCartBadge() {
     const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
     const cartCountElement = document.querySelector(".cart_count");
@@ -17,7 +25,6 @@ function updateCartBadge() {
     }
 }
 
-// Add a product to the cart and refresh the badge
 function addProductToCart(product) {
     let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
     cart.push(product);
@@ -26,20 +33,17 @@ function addProductToCart(product) {
 }
 
 // -------------------- EVENT LISTENER --------------------
-
-// Attach the Add to Cart button listener once the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById("addToCart");
     if (button) {
         button.addEventListener("click", async (e) => {
-            // Get the product ID from the button's data-id attribute
             const product = await dataSource.findProductById(e.target.dataset.id);
             addProductToCart(product);
-
-            // Optional: Show confirmation message
             alert("Product added to cart!");
         });
     }
-    // Show current cart count when the page loads
     updateCartBadge();
 });
+
+// Load header/footer partials
+loadHeaderFooter();
