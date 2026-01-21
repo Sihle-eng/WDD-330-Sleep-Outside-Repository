@@ -19,15 +19,19 @@ export default class ProductData {
       }
 
       const data = await response.json();
-      if (!Array.isArray(data)) {
-        throw new Error(`[ProductData] Invalid JSON format: expected an array, got ${typeof data}`);
+
+      // If the JSON has a "Result" property, use that
+      const products = Array.isArray(data) ? data : data.Result;
+
+      if (!Array.isArray(products)) {
+        throw new Error(`[ProductData] Invalid JSON format: expected an array, got ${typeof products}`);
       }
 
-      console.debug(`[ProductData] Retrieved ${data.length} products`);
-      return data;
+      console.debug(`[ProductData] Retrieved ${products.length} products`);
+      return products;
     } catch (error) {
       console.error(`[ProductData] Error fetching data:`, error);
-      return []; // return empty array so app doesn’t crash
+      return [];
     }
   }
 

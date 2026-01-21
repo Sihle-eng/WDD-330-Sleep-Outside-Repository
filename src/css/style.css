@@ -273,3 +273,40 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.categories {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.category-grid {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  /* slightly smaller gap */
+  flex-wrap: wrap;
+}
+
+.category-card {
+  flex: 0 1 120px;
+  /* reduced width from 150px to 120px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.category-card img {
+  width: 60px;
+  /* reduced from 80px */
+  height: auto;
+  margin-bottom: 0.4rem;
+}
+
+.category-card p {
+  font-size: 0.9rem;
+  /* slightly smaller text */
+  font-weight: 600;
+  margin: 0.2rem 0 0;
+}

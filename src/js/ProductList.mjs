@@ -1,3 +1,4 @@
+// src/js/ProductList.mjs
 import { renderListWithTemplate } from "./utils.mjs";
 
 // -------------------- TEMPLATE FUNCTION --------------------
@@ -6,10 +7,10 @@ function productCardTemplate(product) {
 
     return `
     <li class="product-card">
-      <a href="./product_pages/?product=${product.Id}">
-        <img src="${product.Image || ""}" alt="${product.Name || "Product"}">
-        <h2>${product.Brand?.Name || "Unknown Brand"}</h2>
-        <h3>${product.Name || "Unnamed Product"}</h3>
+      <a href="../product_pages/${product.Id}.html?product=${product.Id}">
+        <img src="${product.Images?.PrimaryLarge || ""}" alt="${product.Name || "Product"}">
+        <h3 class="card__brand">${product.Brand?.Name || "Unknown Brand"}</h3>
+        <h2 class="card__name">${product.Name || "Unnamed Product"}</h2>
         <p class="product-card__price">$${product.FinalPrice || "0.00"}</p>
       </a>
     </li>
@@ -28,6 +29,7 @@ export default class ProductList {
         try {
             const list = await this.dataSource.getData();
             this.renderList(list);
+            this.addCartListeners();
             updateCartBadge(); // ensure badge is correct when list loads
         } catch (err) {
             console.error("[ProductList] Error initializing:", err);
@@ -41,6 +43,17 @@ export default class ProductList {
             return;
         }
         renderListWithTemplate(productCardTemplate, this.listElement, list, "beforeend");
+    }
+
+    addCartListeners() {
+        const buttons = this.listElement.querySelectorAll(".add-to-cart");
+        buttons.forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+                const id = e.target.dataset.id;
+                const product = await this.dataSource.findProductById(id);
+                addToCart(product);
+            });
+        });
     }
 }
 
