@@ -310,3 +310,27 @@ footer {
   font-weight: 600;
   margin: 0.2rem 0 0;
 }
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.search-form input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-form button {
+  padding: 0.4rem 0.8rem;
+  background-color: #2c6e49;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #1e4a32;
+}

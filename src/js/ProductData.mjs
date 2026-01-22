@@ -1,5 +1,5 @@
-const baseURL = import.meta.env.VITE_SERVER_URL
-console.log(baseURL);
+// const baseURL = import.meta.env.VITE_SERVER_URL
+// console.log(baseURL);
 
 export default class ProductData {
   constructor(category) {
