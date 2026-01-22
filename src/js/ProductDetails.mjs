@@ -3,28 +3,48 @@ import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 export default class ProductDetails {
     constructor(productId, dataSource) {
         this.productId = productId;
-        this.product = {};
+        this.product = null;
         this.dataSource = dataSource;
     }
 
     async init() {
-        this.product = await this.dataSource.findProductById(this.productId);
-        this.renderProductDetails();
-        document
-            .getElementById("addToCart")
-            .addEventListener("click", this.addProductToCart.bind(this));
+        try {
+            // fetch product data
+            this.product = await this.dataSource.findProductById(this.productId);
+
+            // render product details
+            this.renderProductDetails();
+
+            // safely attach event listener
+            const button = document.getElementById("addToCart");
+            if (button) {
+                button.addEventListener("click", () => this.addProductToCart());
+            } else {
+                console.warn("Add to Cart button not found in DOM.");
+            }
+        } catch (err) {
+            console.error("Error initializing product details:", err);
+            document.querySelector("main").innerHTML = "<p>Unable to load product details.</p>";
+        }
     }
 
     addProductToCart() {
+        if (!this.product) {
+            console.error("No product loaded to add to cart.");
+            return;
+        }
         const cartItems = getLocalStorage("so-cart") || [];
         cartItems.push(this.product);
         setLocalStorage("so-cart", cartItems);
+        alert("Product added to cart!");
     }
 
     renderProductDetails() {
         productDetailsTemplate(this.product);
     }
 }
+
+// -------------------- TEMPLATE FUNCTION --------------------
 
 function productDetailsTemplate(product) {
     if (!product) {
@@ -33,18 +53,31 @@ function productDetailsTemplate(product) {
         return;
     }
 
-    console.log("Product object:", product); // Debugging
+    // Debugging
+    console.log("Product object:", product);
 
+    // Brand and name
     document.querySelector("h3").textContent = product.Brand?.Name || "Unknown Brand";
-    document.querySelector("h2").textContent = product.NameWithoutBrand;
+    document.querySelector("h2").textContent = product.NameWithoutBrand || "Unnamed Product";
 
+    // Image
     const productImage = document.getElementById("productImage");
-    productImage.src = product.ImageUrl || product.Image || "";
-    productImage.alt = product.NameWithoutBrand;
+    if (productImage) {
+        productImage.src = product.ImageUrl || product.Image || "";
+        productImage.alt = product.NameWithoutBrand || "Product image";
+    }
 
-    document.getElementById("productPrice").textContent = `$${product.FinalPrice}`;
-    document.getElementById("productColor").textContent = product.Colors?.[0]?.ColorName || "";
-    document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
+    // Price, color, description
+    const priceEl = document.getElementById("productPrice");
+    if (priceEl) priceEl.textContent = `$${product.FinalPrice}`;
 
-    document.getElementById("addToCart").dataset.id = product.Id;
+    const colorEl = document.getElementById("productColor");
+    if (colorEl) colorEl.textContent = product.Colors?.[0]?.ColorName || "";
+
+    const descEl = document.getElementById("productDesc");
+    if (descEl) descEl.innerHTML = product.DescriptionHtmlSimple || "";
+
+    // Button dataset
+    const button = document.getElementById("addToCart");
+    if (button) button.dataset.id = product.Id;
 }
