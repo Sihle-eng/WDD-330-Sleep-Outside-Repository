@@ -1,6 +1,3 @@
-// const baseURL = import.meta.env.VITE_SERVER_URL
-// console.log(baseURL);
-
 export default class ProductData {
   constructor(category) {
     this.category = category;
@@ -8,10 +5,6 @@ export default class ProductData {
     console.info(`[ProductData] Initialized with category="${category}", path="${this.path}"`);
   }
 
-  /**
-   * Fetch all products for the given category.
-   * @returns {Promise<Array>} Array of product objects.
-   */
   async getData() {
     try {
       console.debug(`[ProductData] Fetching data from: ${this.path}`);
@@ -40,9 +33,21 @@ export default class ProductData {
 
   /**
    * Find a single product by its ID.
+   * @param {Array} products - Array of product objects.
    * @param {string} id - Product ID to search for.
+   * @returns {Object|null} Product object or null if not found.
    */
   findById(products, id) {
-    return products.find(p => p.Id === id);
+    if (!Array.isArray(products)) {
+      console.error("[ProductData] findById called with invalid products array");
+      return null;
+    }
+    const product = products.find(p => p.Id === id || p.id === id);
+    if (!product) {
+      console.warn(`[ProductData] Product not found for ID="${id}"`);
+      return null;
+    }
+    return product;
   }
 }
+return;
