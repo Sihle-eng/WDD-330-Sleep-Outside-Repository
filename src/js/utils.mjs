@@ -123,6 +123,26 @@ export async function loadTemplate(path) {
   }
 }
 
+function initializeHeaderFooter() {
+  updateCartCount();
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+  }
+  const cartIcon = document.querySelector('.cart-icon, .cart-link');
+  if (cartIcon && !cartIcon.hasAttribute('data-listener-added')) {
+    cartIcon.addEventListener('click', (e) => {
+      if (!cartIcon.getAttribute('href')) {
+        e.preventDefault();
+        window.location.href = '../cart/index.html';
+      }
+    });
+    cartIcon.setAttribute('data-listener-added', 'true');
+  }
+}
+
+
 // Fixed header/footer loader
 export async function loadHeaderFooter() {
   try {
