@@ -126,9 +126,9 @@ export async function loadTemplate(path) {
 // Fixed header/footer loader
 export async function loadHeaderFooter() {
   try {
-    // Correct relative paths (works on GitHub Pages and locally)
-    const headerTemplate = await loadTemplate('../public/partials/header.html');
-    const footerTemplate = await loadTemplate('../public/partials/footer.html');
+    // Correct paths: public/partials/* is deployed as /partials/*
+    const headerTemplate = await loadTemplate(`${import.meta.env.BASE_URL}partials/header.html`);
+    const footerTemplate = await loadTemplate(`${import.meta.env.BASE_URL}partials/footer.html`);
 
     const headerElement = document.querySelector('#main-header, header, [data-header]');
     const footerElement = document.querySelector('#main-footer, footer, [data-footer]');
@@ -152,26 +152,6 @@ export async function loadHeaderFooter() {
   } catch (error) {
     console.error('loadHeaderFooter: Error loading header/footer:', error);
     return false;
-  }
-}
-
-// Initialize header/footer interactions
-function initializeHeaderFooter() {
-  updateCartCount();
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navMenu = document.querySelector('.nav-menu');
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
-  }
-  const cartIcon = document.querySelector('.cart-icon, .cart-link');
-  if (cartIcon && !cartIcon.hasAttribute('data-listener-added')) {
-    cartIcon.addEventListener('click', (e) => {
-      if (!cartIcon.getAttribute('href')) {
-        e.preventDefault();
-        window.location.href = '../cart/index.html';
-      }
-    });
-    cartIcon.setAttribute('data-listener-added', 'true');
   }
 }
 
