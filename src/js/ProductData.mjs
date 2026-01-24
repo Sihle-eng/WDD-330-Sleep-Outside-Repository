@@ -1,10 +1,15 @@
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `/json/${this.category}.json`;
+    // Use BASE_URL so paths work both locally and on GitHub Pages
+    this.path = `${import.meta.env.BASE_URL}json/${this.category}.json`;
     console.info(`[ProductData] Initialized with category="${category}", path="${this.path}"`);
   }
 
+  /**
+   * Fetch all products for the given category.
+   * @returns {Promise<Array>} Array of product objects.
+   */
   async getData() {
     try {
       console.debug(`[ProductData] Fetching data from: ${this.path}`);
