@@ -4,7 +4,8 @@
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    this.path = `/src/public/json/${this.category}.json`;
+    // ✅ Use the public folder directly (no /src)
+    this.path = `/json/${this.category}.json`;
     console.info(`[ProductData] Initialized with category="${category}", path="${this.path}"`);
   }
 
@@ -41,19 +42,8 @@ export default class ProductData {
   /**
    * Find a single product by its ID.
    * @param {string} id - Product ID to search for.
-   * @returns {Promise<Object|null>} Product object or null if not found.
    */
-  async findProductById(id) {
-    console.debug(`[ProductData] Searching for product with id="${id}"`);
-    const products = await this.getData();
-
-    const product = products.find(item => item.Id === id);
-    if (product) {
-      console.debug(`[ProductData] Product found:`, product);
-      return product;
-    } else {
-      console.warn(`[ProductData] No product found with id="${id}"`);
-      return null;
-    }
+  findById(products, id) {
+    return products.find(p => p.Id === id);
   }
 }
