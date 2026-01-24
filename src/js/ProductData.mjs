@@ -4,8 +4,7 @@
 export default class ProductData {
   constructor(category) {
     this.category = category;
-    // ✅ Use the public folder directly (no /src)
-    this.path = `/json/${this.category}.json`;
+    this.path = `/public/json/${this.category}.json`;
     console.info(`[ProductData] Initialized with category="${category}", path="${this.path}"`);
   }
 
