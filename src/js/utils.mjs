@@ -286,18 +286,13 @@ export async function loadTemplate(path) {
 export async function loadHeaderFooter() {
   try {
     const headerPaths = [
-      '/src/public/partials/header.html',
-      '../public/partials/header.html',
-      './partials/header.html',
-      '/partials/header.html'
+      '../public/partials/header.html'
     ];
 
     const footerPaths = [
-      '/src/public/partials/footer.html',
-      '../public/partials/footer.html',
-      './partials/footer.html',
-      '/partials/footer.html'
+      '../public/partials/footer.html'
     ];
+
 
     let headerTemplate = '';
     let footerTemplate = '';
