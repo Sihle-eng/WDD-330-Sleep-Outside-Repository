@@ -126,8 +126,8 @@ export async function loadTemplate(path) {
 // Fixed header/footer loader
 export async function loadHeaderFooter() {
   try {
-    const headerTemplate = await loadTemplate('/WDD-330-Sleep-Outside-Repository/partials/header.html');
-    const footerTemplate = await loadTemplate('/WDD-330-Sleep-Outside-Repository/partials/footer.html');
+    const headerTemplate = await loadTemplate('/partials/header.html');
+    const footerTemplate = await loadTemplate('/partials/footer.html');
 
 
     const headerElement = document.querySelector('#main-header, header, [data-header]');
