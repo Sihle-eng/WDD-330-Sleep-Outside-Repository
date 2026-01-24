@@ -42,11 +42,15 @@ export default class ProductData {
       console.error("[ProductData] findById called with invalid products array");
       return null;
     }
+
+    // Match both Id and id fields to avoid schema mismatches
     const product = products.find(p => p.Id === id || p.id === id);
+
     if (!product) {
       console.warn(`[ProductData] Product not found for ID="${id}"`);
       return null;
     }
+
     return product;
   }
 }
