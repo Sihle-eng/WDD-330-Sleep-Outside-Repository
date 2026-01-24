@@ -50,4 +50,3 @@ export default class ProductData {
     return product;
   }
 }
-return;
