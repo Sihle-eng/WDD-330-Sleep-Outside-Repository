@@ -10,7 +10,8 @@ export default class ProductDetails {
     async init() {
         try {
             // fetch product data
-            this.product = await this.dataSource.findProductById(this.productId);
+            const products = await this.dataSource.getData();
+            this.product = this.dataSource.findById(products, this.productId);
 
             // render product details
             this.renderProductDetails();
