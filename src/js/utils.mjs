@@ -146,8 +146,8 @@ function initializeHeaderFooter() {
 // Fixed header/footer loader
 export async function loadHeaderFooter() {
   try {
-    const headerTemplate = await loadTemplate('./public/partials/header.html');
-    const footerTemplate = await loadTemplate('./public/partials/footer.html');
+    const headerTemplate = await loadTemplate('/src/public/partials/header.html');
+    const footerTemplate = await loadTemplate('/src/public/partials/footer.html');
 
 
     const headerElement = document.querySelector('#main-header, header, [data-header]');

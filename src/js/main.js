@@ -1,5 +1,5 @@
 // src/product_listing/main.js
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
 
@@ -9,7 +9,7 @@ const productId = params.get("product"); // expects ?product=123 or ?product=880
 
 // Create one dataSource for use everywhere
 // Adjust category if needed (e.g., "tents", "backpacks", etc.)
-const dataSource = new ProductData("tents");
+const dataSource = new ExternalServices("tents");
 
 // -------------------- PRODUCT DETAILS --------------------
 if (productId) {
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
             // Get product ID from the button's data attribute FIRST
             // This is more reliable than using URL params on listing pages
             const id = e.target.dataset.id || e.target.closest("[data-id]")?.dataset.id;
-            
+
             // If no ID on button, fall back to URL param (for product detail pages)
             const finalId = id || productId;
-            
+
             if (!finalId) {
                 console.error("No product ID found for Add to Cart.");
                 alert("Error: Product ID missing. Please select a product first.");
@@ -70,9 +70,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+    const checkoutBtn = document.querySelector(".checkout-btn");
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", () => { window.location.href = "/src/checkout/index.html"; });
+    }
 
     updateCartBadge();
 });
 
 // -------------------- HEADER/FOOTER --------------------
 loadHeaderFooter();
+

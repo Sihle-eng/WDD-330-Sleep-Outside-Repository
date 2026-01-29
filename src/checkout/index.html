@@ -21,6 +21,34 @@
     <section class="products">
       <h2>Review & Place your Order</h2>
     </section>
+    <form id="checkoutForm">
+      <h2>Customer Information</h2>
+      <label>First Name<input type="text" id="firstName" required></label>
+      <label>Last Name<input type="text" id="lastName" required></label>
+      
+      <h2>Address</h2>
+      <label>Street Address<input type="text" name="street" required></label>
+      <label>City<input type="text" name="city" required></label>
+      <label>State<input type="text" name="state" required></label>
+      <label>Zip Code<input type="text" name="zip" required></label>
+
+      <h2>Payment Information</h2>
+      <label>Credit Card Number<input type="text" name="cardNumber" value="1234123412341234" required></label>
+      <label>Expiration Date<input type="text" name="expDate" value="12/30" placeholder="MM/YY" required></label>
+      <label>Secuirty Code<input type="text" name="cvv" value="123" required></label>
+
+      <button type="submit" class="checkout-btn">Complete Checkout</button>
+    </form>
+    <div id="orderSummary">
+      <h2>Order Summary</h2>
+      <p>Items in Cart: <span id="num-items">0</span></p>
+      <p>Subtotal: <span id="subtotal">$0.00</span></p>
+      <p>Tax: <span id="tax">$0.00</span></p>
+      <p>Shipping Estimate: <span id="shipping">$0.00</span></p>
+      <hr/>
+      <p><strong>Order Total: <span id="orderTotal">$0.00</span></strong></p>
+    </div>
+
   </main>
 
   <footer id="main-footer"></footer>

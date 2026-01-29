@@ -2,13 +2,13 @@
 
 // Import utilities and classes
 import { getParam, loadHeaderFooter } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
 // -------------------- PRODUCT DETAILS --------------------
 
 // Create a data source for tents
-const dataSource = new ProductData("tents");
+const dataSource = new ExternalServices("tents");
 
 // Get the product ID from the query string (?product=...)
 const productID = getParam("product");

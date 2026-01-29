@@ -334,3 +334,58 @@ footer {
 .search-form button:hover {
   background-color: #1e4a32;
 }
+
+.btn-container {
+  text-align: center;;
+}
+.checkout-btn {
+  background-color: #0078d7;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.checkout-btn:hover {
+  background-color: #005a9e;
+}
+
+#checkoutForm {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border:  1px solid var(--light-grey);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+#checkoutForm h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: var(--large-font);
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--light-grey);
+  padding-bottom: 0.3rem;
+}
+#checkoutForm label {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  font-weight: bold;
+  color: var(--dark-grey);
+}
+
+#checkoutForm input[type="text"] {
+  padding: 0.6rem;
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+  margin-top: 0.4rem;
+  font-size: 1rem;
+}
+
+.products {
+  text-align: center;
+}
+
+#orderSummary{
+  text-align: center;
+}
