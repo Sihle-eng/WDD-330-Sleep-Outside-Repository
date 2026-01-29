@@ -334,3 +334,17 @@ footer {
 .search-form button:hover {
   background-color: #1e4a32;
 }
+
+.btn-container {
+  text-align: center;;
+}
+.checkout-btn {
+  background-color: #0078d7;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.checkout-btn:hover {
+  background-color: #005a9e;
+}
