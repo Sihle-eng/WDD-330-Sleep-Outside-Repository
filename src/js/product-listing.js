@@ -1,5 +1,5 @@
 // product-listing.js - Main entry point for product listing page
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 
 // Main initialization function
@@ -67,7 +67,7 @@ async function handleSearch(category, search, listElement, heading, breadcrumb) 
     }
 
     // Load and filter products
-    const dataSource = new ProductData(category);
+    const dataSource = new ExternalServices(category);
     const productList = new ProductList(category, dataSource, listElement);
 
     try {
@@ -120,7 +120,7 @@ async function handleCategory(category, listElement, heading, breadcrumb) {
     }
 
     // Load products for category
-    const dataSource = new ProductData(category);
+    const dataSource = new ExternalServices(category);
     const productList = new ProductList(category, dataSource, listElement);
 
     try {
