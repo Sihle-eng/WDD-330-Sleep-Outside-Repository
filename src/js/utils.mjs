@@ -1,95 +1,108 @@
+// ===============================
+// Query Helpers
+// ===============================
 
-// Wrapper for querySelector with error handling
 export function qs(selector, parent = document) {
   if (!selector || typeof selector !== 'string') {
-    console.error('qs: Invalid selector provided:', selector);
+    console.error('qs: Invalid selector:', selector);
     return null;
   }
   try {
-    const element = parent.querySelector(selector);
-    if (!element) {
-      console.warn(`qs: Element not found with selector: "${selector}"`);
-    }
-    return element;
+    return parent.querySelector(selector);
   } catch (error) {
-    console.error(`qs: Error querying selector "${selector}":`, error);
+    console.error(`qs: Error querying "${selector}":`, error);
     return null;
   }
 }
 
-// Wrapper for querySelectorAll with error handling
 export function qsAll(selector, parent = document) {
   if (!selector || typeof selector !== 'string') {
-    console.error('qsAll: Invalid selector provided:', selector);
+    console.error('qsAll: Invalid selector:', selector);
     return [];
   }
   try {
     return parent.querySelectorAll(selector);
   } catch (error) {
-    console.error(`qsAll: Error querying selector "${selector}":`, error);
+    console.error(`qsAll: Error querying "${selector}":`, error);
     return [];
   }
 }
 
-// LocalStorage helpers
+// ===============================
+// LocalStorage Helpers
+// ===============================
+
 export function getLocalStorage(key) {
   if (!key || typeof key !== 'string') {
-    console.error('getLocalStorage: Invalid key provided:', key);
+    console.error('getLocalStorage: Invalid key:', key);
     return null;
   }
   try {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : null;
   } catch (error) {
-    console.error(`getLocalStorage: Error retrieving key "${key}":`, error);
-    return localStorage.getItem(key);
+    console.error(`getLocalStorage: Error parsing key "${key}":`, error);
+    return localStorage.getItem(key); // fallback raw string
   }
 }
 
 export function setLocalStorage(key, data) {
   if (!key || typeof key !== 'string') {
-    console.error('setLocalStorage: Invalid key provided:', key);
+    console.error('setLocalStorage: Invalid key:', key);
     return false;
   }
   try {
     localStorage.setItem(key, JSON.stringify(data));
     return true;
   } catch (error) {
-    console.error(`setLocalStorage: Error saving to key "${key}":`, error);
+    console.error(`setLocalStorage: Error saving key "${key}":`, error);
     return false;
   }
 }
 
-// Event listener helper
+// ===============================
+// Event Listener Helper
+// ===============================
+
 export function setClick(selector, callback) {
   const element = qs(selector);
   if (!element || typeof callback !== 'function') return false;
+
   try {
-    element.addEventListener("touchend", (event) => {
-      event.preventDefault();
-      callback(event);
-    }, { passive: false });
-    element.addEventListener("click", callback);
+    if (!element.hasAttribute('data-click-bound')) {
+      element.addEventListener("touchend", (event) => {
+        event.preventDefault();
+        callback(event);
+      }, { passive: false });
+      element.addEventListener("click", callback);
+      element.setAttribute('data-click-bound', 'true');
+    }
     return true;
   } catch (error) {
-    console.error(`setClick: Error adding event listeners to "${selector}":`, error);
+    console.error(`setClick: Error binding to "${selector}":`, error);
     return false;
   }
 }
 
-// URL parameter helper
+// ===============================
+// URL Parameter Helper
+// ===============================
+
 export function getParam(param) {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const value = urlParams.get(param);
     return value === '' ? null : value;
   } catch (error) {
-    console.error(`getParam: Error getting parameter "${param}":`, error);
+    console.error(`getParam: Error getting "${param}":`, error);
     return null;
   }
 }
 
-// Template rendering helpers
+// ===============================
+// Template Rendering Helpers
+// ===============================
+
 export function renderListWithTemplate(templateFn, parentElement, list, position = "beforeend", clear = true) {
   if (clear) parentElement.innerHTML = '';
   list.forEach(item => {
@@ -111,25 +124,34 @@ export function renderWithTemplate(template, parentElement, data, callback, clea
   parentElement.appendChild(clone);
 }
 
-// Load external partials
+// ===============================
+// External Template Loader
+// ===============================
+
 export async function loadTemplate(path) {
   try {
     const response = await fetch(path);
     if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     return await response.text();
   } catch (error) {
-    console.error(`loadTemplate: Error loading template from "${path}":`, error);
+    console.error(`loadTemplate: Error loading "${path}":`, error);
     return '';
   }
 }
 
+// ===============================
+// Header/Footer Loader
+// ===============================
+
 function initializeHeaderFooter() {
   updateCartCount();
+
   const menuToggle = document.querySelector('.menu-toggle');
   const navMenu = document.querySelector('.nav-menu');
   if (menuToggle && navMenu) {
     menuToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
   }
+
   const cartIcon = document.querySelector('.cart-icon, .cart-link');
   if (cartIcon && !cartIcon.hasAttribute('data-listener-added')) {
     cartIcon.addEventListener('click', (e) => {
@@ -142,13 +164,10 @@ function initializeHeaderFooter() {
   }
 }
 
-
-// Fixed header/footer loader
 export async function loadHeaderFooter() {
   try {
     const headerTemplate = await loadTemplate('/src/public/partials/header.html');
     const footerTemplate = await loadTemplate('/src/public/partials/footer.html');
-
 
     const headerElement = document.querySelector('#main-header, header, [data-header]');
     const footerElement = document.querySelector('#main-footer, footer, [data-footer]');
@@ -175,26 +194,25 @@ export async function loadHeaderFooter() {
   }
 }
 
-// Cart count updater
+// ===============================
+// Cart Count Updater
+// ===============================
+
 export function updateCartCount() {
   const cart = getLocalStorage('so-cart') || [];
   document.querySelectorAll('.cart-count, .cart_count, [data-cart-count]').forEach(el => {
-    el.textContent = cart.length;
+    el.textContent = String(cart.length);
     el.classList.toggle('has-items', cart.length > 0);
   });
 }
 
-// Utility helpers
-export function debounce(func, wait = 300) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
+// utils.mjs
+export function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  setTimeout(() => notification.remove(), 3000);
 }
 
-export function formatPrice(price, currency = '$') {
-  return (typeof price === 'number' && !isNaN(price))
-    ? `${currency}${price.toFixed(2)}`
-    : `${currency}0.00`;
-}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Outdoor Gear</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script type="module" src="../js/signup.js"></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html">Outdoor Gear</a>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="../product_listing/index.html?category=tents">Shop</a></li>
+                <li><a href="../cart/index.html">Cart</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <div class="signup-container">
+            <div class="signup-header">
+                <h1>Create Your Account</h1>
+                <p>Join our community of outdoor enthusiasts</p>
+            </div>
+        </div>
+        <form id="signupForm" class="signup-form">
+            <div class="form-group">
+                <label for="firstName">First Name <span class="required">*</span></label>
+                <input type="text" id="firstName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name <span class="required">*</span></label>
+                <input type="text" id="lastName" class="form-control" required>
+                <div class="error-message" id="lastNameError">Please enter your name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" id="email" class="form-control" required>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control">
+                <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password<span class="required">*</span></label>
+                <input type="password" id="password" class="form-control" required>
+                <div class="error-message" id="passwordError">Password must be at least 8 characters</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password<span class="required">*</span></label>
+                <input type="password" id="confirmPassword" class="form-control" required>
+                <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+            </div>
+
+            <div class="form-group full-width">
+                <label for="address">Street Address<span class="required">*</span></label>
+                <input type="text" id="address" class="form-control" required>
+                <div class="error-message" id="addressError">Please enter your street address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City<span class="required">*</span></label>
+                <input type="text" id="city" class="form-control" required>
+                <div class="error-message" id="cityError">Please enter your city</div>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State/Province</label>
+                <input type="text" id="state" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="zipCode">Zip/Postal Code<span class="required">*</span></label>
+                <input type="text" id="zipCode" class="form-control" required>
+                <div class="error-message" id="zipCodeError">Please enter a valid ZIP code</div>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country <span class="required">*</span></label>
+
+                <select id="country" class="form-control" required>
+                    <option value="">Select Country</option>
+                    <option value="SA">South Africa</option>
+                    <option value="ZIM">Zimbabwe</option>
+                    <option value="BO">Botswana</option>
+                    <option value="ZA">Zambia</option>
+                    <option value="AN">Angola</option>
+                    <option value="NG">Nigeria</option>
+                    <option value="LE">Lesotho</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error-message" id="countryError">Please select your country</div>
+            </div>
+
+            <div class="form-group full-width avatar-upload">
+                <label>Profile Picture (optional)</label>
+                <div class="avatar-preview" id="avatarPreview">
+                    <div class="avatar-placeholder">
+                        👤
+                        <span>Click to unpload</span>
+                    </div>
+                </div>
+                <input type="file" id="avatar" accept="image/*" name="avatar">
+                <button type="button" class="btn" id="uploadBtn">Choose Image</button>
+                <div class="error-message" id="avatarError">Image must be less than 2MB</div>
+            </div>
+
+            <div class="form-group full-width">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#"
+                            onclick="alert('Terms of Service content would go here'); return false;">Terms of
+                            Service</a> and <a href="#"
+                            onclick="alert('Privacy Policy content would go here'); return false;">Privacy Policy</a>
+                        <span class="required">*</span>
+                    </label>
+                </div>
+                <div class="error-message" id="termsError">You must agree to the terms and conditions</div>
+            </div>
+
+            <div class="form-group full-width">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter">
+                    <label for="newsletter">
+                        Subscribe to our newsletter for updates on new gear and exclusive offers
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit" id="submitBtn">Create Account</button>
+            </div>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">✓</div>
+            <h2>Account Created Successfully!</h2>
+            <p>Welcome to Outdoor Gear! Your account has been created.</p>
+            <p>You can now <a href="login.html">log in</a> and start shopping.</p>
+            <button class="btn-submit" onclick="window.location.href='login.html'">Go to Login</button>
+        </div>
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Sign In</a>
+        </div>
+        </div>
+
+    </main>
+
+    <footer id="main-footer">
+    </footer>
+</body>
+
+</html>
