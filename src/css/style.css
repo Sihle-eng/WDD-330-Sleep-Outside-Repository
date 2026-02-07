@@ -558,3 +558,41 @@ footer {
     width: 70%;
   }
 }
+
+@keyframes cart-shake {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(10deg);
+  }
+
+  75% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.cart.animate {
+
+  animation: cart-shake 0.6s ease;
+}
+
+.cart_count {
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
