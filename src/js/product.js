@@ -52,3 +52,28 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartBadge();
 });
 loadHeaderFooter();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const addToCartBtn = document.getElementById("addToCart");
+  const cart = document.querySelector(".cart");
+  const cartCount = document.querySelector(".cart_count");
+
+  // Load count from localStorage so it persists across pages
+  let count = parseInt(localStorage.getItem("cartCount")) || 0;
+  cartCount.textContent = count;
+
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener("click", () => {
+      // Increase count
+      count++;
+      cartCount.textContent = count;
+      localStorage.setItem("cartCount", count);
+
+      // Animate cart
+      cart.classList.add("animate");
+      cart.addEventListener("animationend", () => {
+        cart.classList.remove("animate");
+      }, { once: true });
+    });
+  }
+});
